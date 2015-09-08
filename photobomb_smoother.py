@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 __author__  = "Ryota Sato"
-__version__ = "1.0.0"
-__date__    = "7 Sep 2015"
+__version__ = "1.0.1"
+__date__    = "8 Sep 2015"
 
 import cv2
 import numpy as np
@@ -37,9 +37,10 @@ def detect_photobombs(faces):
             class_b.append(face_sizes[i])
     mean_a = np.mean(class_a)
     mean_b = np.mean(class_b)
-    # Photobombのラベルがどちらか調べる
-    label_photobomb = 0
-    if mean_a > mean_b:
+    # 小さな顔のクラスがPhotobomb
+    if mean_a < mean_b:
+        label_photobomb = 0
+    else:
         label_photobomb = 1
 
     # 顔を被写体とPhotobombに分ける
